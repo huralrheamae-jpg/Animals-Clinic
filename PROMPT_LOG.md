@@ -19,13 +19,6 @@ Only include prompts actually sent to Copilot. Do not invent responses, changes,
 
 The same message also specified the app purpose and the FR-01, validation, localStorage, design, scope, and verification requirements.
 
-**Copilot's actual response:**
-
-> [Paste or summarize the response you actually received.]
-
-**Changes I made or accepted:**
-
-- [Record what you actually changed or accepted.]
 
 ## Prompt 2 – FR-01 Review
 
@@ -35,13 +28,6 @@ The same message also specified the app purpose and the FR-01, validation, local
 
 > Review my Pawcare Appointment Tracker against the FR-01 requirements. Test all important functions, including adding appointments, required-field validation, rejecting past dates, updating status, deleting appointments, and localStorage persistence after refreshing. Fix any problems you find. Do not add new features. Explain each bug you fixed in beginner-friendly language.
 
-**Copilot's actual response:**
-
-> [Paste or summarize the response you actually received.]
-
-**Changes I made or accepted:**
-
-- [Record what you actually changed or accepted.]
 
 ## Prompt 3 – Visual Design Improvement
 
@@ -51,13 +37,6 @@ The same message also specified the app purpose and the FR-01, validation, local
 
 > Improve the visual design of my Pawcare Appointment Tracker while keeping the existing green-and-white Pawcare theme. Make the page responsive, clean, modern, and easy to use. Ensure that buttons, forms, tables, and messages do not overlap or hide important text. Do not change the FR-01 functionality or remove working features.
 
-**Copilot's actual response:**
-
-> [Paste or summarize the response you actually received.]
-
-**Changes I made or accepted:**
-
-- [Record what you actually changed or accepted.]
 
 ---
 
@@ -69,14 +48,6 @@ The same message also specified the app purpose and the FR-01, validation, local
 
 > add a nice gradient color
 
-**Copilot's actual response:**
-
-> [Add Copilot's actual response.]
-
-**Changes I made or accepted:**
-
-- [Describe the gradient changes made or accepted.]
-
 ---
 
 ## Prompt 5 – Project Documentation
@@ -87,14 +58,6 @@ The same message also specified the app purpose and the FR-01, validation, local
 
 > Help me prepare the documentation for my Pawcare Appointment Tracker Lab 1 project. Create or update README.md, PROJECT_BRIEF.md, and PROMPT_LOG.md. Explain the community problem, target users, FR-01, features, technologies, and localStorage architecture. In PROMPT_LOG.md, include only prompts actually used in this project and leave space for me to record Copilot's actual responses and changes. Do not invent completed tests, commits, or project activities.
 
-**Copilot's actual response:**
-
-> [Add Copilot's actual response.]
-
-**Changes I made or accepted:**
-
-- [Describe the documentation changes made or accepted.]
-
 ---
 
 ## Prompt 6 – Prompt Log Review
@@ -104,14 +67,6 @@ The same message also specified the app purpose and the FR-01, validation, local
 **Prompt (verbatim):**
 
 > check my PROMPT_LOG.md
-
-**Copilot's actual response:**
-
-> [Paste or summarize the response you actually received.]
-
-**Changes I made or accepted:**
-
-- [Describe the actual corrections made or accepted.]
 
 ---
 
@@ -143,11 +98,6 @@ The same message also specified the app purpose and the FR-01, validation, local
 
 > Browser-tested the requested core flows using fictional data. Required-field validation, past-date rejection, saving and refresh persistence, status changes, editing, deletion, and responsive layout checks passed. No application bug was found; the empty state after deleting the last appointment still needs a manual check.
 
-**Changes I made or accepted:**
-
-- [Record the actual fixes or changes accepted after reviewing the Copilot session.]
-
----
 
 ## Prompt 8 – Project Structure Inspection
 
@@ -162,10 +112,6 @@ The same message also specified the app purpose and the FR-01, validation, local
 **Copilot's actual response:**
 
 > Copilot inspected the app, documentation, `.gitignore`, and Git status. It reported the app structure and identified submission follow-ups: confirm the repository is public, verify the pull request, create the v0.1.0 release, add the YouTube demo link, and confirm the community problem with a clinic staff member.
-
-**Changes I made or accepted:**
-
-- [Record any actual changes made after the inspection.]
 
 ---
 
@@ -201,6 +147,43 @@ The same message also specified the app purpose and the FR-01, validation, local
 - The README test table marks the last-appointment empty-state test as "Not yet tested".
 - PROMPT_LOG.md was updated with additional actual prompt entries.
 - No Git publishing actions were performed.
+
+---
+
+## Prompt 10 – Add Navigation
+
+**Date:** 2026-11-27
+
+**Prompt (verbatim excerpt):**
+
+> [index.html](file:///c%3A/Users/MARK/Desktop/animals%20clinic/index.html) can we add a navigation
+
+**Copilot's actual response:**
+
+> Added accessible in-page navigation that switches between separate Schedule and Appointments views. Editing an appointment returns to the Schedule view, and status messages remain visible in either view. Browser checks confirmed navigation and edit flow work without horizontal overflow at 320px, 375px, and desktop width.
+
+**Changes I made or accepted:**
+
+- Added responsive view navigation and moved the shared status message outside the views. FR-01 behavior was unchanged.
+
+---
+
+## Prompt 11 – Separate Schedule and Appointments
+
+**Date:** 2026-11-27
+
+**Prompt (verbatim):**
+
+> can u separate the schedule and appoinmets
+
+**Copilot's actual response:**
+
+> The Schedule form and Appointments list now display as separate in-page views controlled by the navigation. The app remains one HTML page.
+
+**Changes I made or accepted:**
+
+- Added the requested separate views without creating extra pages.
+- Kept save, edit, status, and delete behavior on the existing appointment tracker.
 
 ---
 

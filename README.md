@@ -27,6 +27,7 @@ The primary users are staff at a small community veterinary clinic who schedule 
 
 ## Features
 
+- Switch between separate Schedule and Appointments views using in-page navigation.
 - Add and view appointments in date-and-time order.
 - Edit appointment details and cancel an unsaved edit.
 - Change status to Pending, Completed, or Cancelled.

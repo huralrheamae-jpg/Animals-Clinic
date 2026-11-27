@@ -48,12 +48,24 @@
       color: #53675b; font-size: 11px; font-weight: 650;
     }
     .local-badge::before { width: 7px; height: 7px; border-radius: 50%; background: #58a579; content: ""; }
+    .primary-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .primary-nav a {
+      display: inline-flex; min-height: 38px; align-items: center; padding: 8px 13px;
+      border: 1px solid #dfe9e2; border-radius: 999px; background: rgba(255,255,255,.75);
+      color: var(--green-dark); font-size: 12px; font-weight: 700; text-decoration: none;
+      transition: background .16s ease, border-color .16s ease;
+    }
+    .primary-nav a:hover { border-color: #b8cdbf; background: var(--green-pale); }
+    .primary-nav a:focus-visible { outline: 3px solid rgba(47, 120, 98, .28); outline-offset: 2px; }
+    .primary-nav a[aria-current="page"] { border-color: #c6dccd; background: var(--green-pale); }
     .hero { margin: 38px 0 30px; }
     .hero-kicker { display: flex; align-items: center; gap: 8px; color: var(--green); font-size: 12px; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
     .hero-kicker::before { width: 19px; height: 2px; border-radius: 2px; background: #72a98a; content: ""; }
     h1 { max-width: 800px; margin: 11px 0 9px; font-size: clamp(30px, 4.3vw, 46px); line-height: 1.1; letter-spacing: -1.7px; text-wrap: balance; }
     .intro { max-width: 650px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.65; }
     .layout { display: grid; grid-template-columns: minmax(310px, .82fr) minmax(0, 1.18fr); gap: 22px; align-items: start; }
+    .layout.single-view { display: block; }
+    .layout.single-view > .card { max-width: 760px; margin: 0 auto; }
     .card {
       min-width: 0; padding: 26px; border: 1px solid rgba(220, 232, 223, .95); border-radius: 20px;
       background: var(--white); box-shadow: 0 16px 42px rgba(34, 69, 49, .075), 0 2px 6px rgba(34, 69, 49, .025);
@@ -88,8 +100,8 @@
     button:hover:not(:disabled) { transform: translateY(-1px); background: linear-gradient(135deg, #327d63 0%, #245f4e 60%, #1d4f3f 100%); box-shadow: 0 7px 17px rgba(34, 96, 70, .22); }
     button:focus-visible, select:focus-visible { outline: 3px solid rgba(47, 120, 98, .28); outline-offset: 2px; }
     button:disabled { cursor: not-allowed; opacity: .6; }
-    .notice { min-height: 0; margin: 0; color: #496052; font-size: 12px; line-height: 1.55; overflow-wrap: anywhere; }
-    .notice:not(:empty) { padding: 11px 12px; border: 1px solid #dbece0; border-radius: 10px; background: #f1f8f3; }
+    .notice { max-width: 760px; min-height: 0; margin: 0 auto; color: #496052; font-size: 12px; line-height: 1.55; overflow-wrap: anywhere; }
+    .notice:not(:empty) { margin-bottom: 18px; padding: 11px 12px; border: 1px solid #dbece0; border-radius: 10px; background: #f1f8f3; }
     .notice.error { border-color: #f0d8d5; background: #fff5f3; color: var(--danger); }
     .list-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 17px; }
     #appointmentCount { flex: 0 0 auto; padding: 6px 10px; border: 1px solid #e0ebe3; border-radius: 999px; background: #f7faf7; color: #607367; font-size: 11px; font-weight: 650; }
@@ -157,6 +169,10 @@
         </div>
         <div class="local-badge">Local demo</div>
       </div>
+      <nav class="primary-nav" aria-label="Page navigation">
+        <a href="#schedule">Schedule a visit</a>
+        <a href="#appointments">Appointments</a>
+      </nav>
       <div class="hero">
         <div class="hero-kicker">Simple appointment management</div>
         <h1>Pawcare – Community Pet Appointment Tracker</h1>
@@ -164,8 +180,10 @@
       </div>
     </header>
 
+    <p id="notice" class="notice" role="status" aria-live="polite"></p>
+
     <div class="layout">
-      <section class="card" aria-labelledby="formTitle">
+      <section id="schedule" class="card" aria-labelledby="formTitle">
         <div class="section-heading">
           <div><p class="section-kicker">Appointment details</p><h2 id="formTitle">Schedule a visit</h2></div>
           <div class="section-icon" aria-hidden="true">＋</div>
@@ -198,11 +216,10 @@
             <button id="saveButton" type="submit">Add appointment</button>
             <button id="cancelEditButton" class="small-button" type="button" hidden>Cancel edit</button>
           </div>
-          <p id="notice" class="notice" role="status" aria-live="polite"></p>
         </form>
       </section>
 
-      <section class="card" aria-labelledby="listTitle">
+      <section id="appointments" class="card" aria-labelledby="listTitle">
         <div class="list-heading">
           <div><p class="section-kicker">Your schedule</p><h2 id="listTitle">Appointments</h2></div>
           <span id="appointmentCount"></span>
@@ -225,9 +242,29 @@
       var saveButton = document.getElementById("saveButton");
       var formTitle = document.getElementById("formTitle");
       var cancelEditButton = document.getElementById("cancelEditButton");
+      var scheduleSection = document.getElementById("schedule");
+      var appointmentsSection = document.getElementById("appointments");
+      var layout = document.querySelector(".layout");
+      var primaryNav = document.querySelector(".primary-nav");
       var appointments = [];
       var storageReady = true;
       var editingId = null;
+
+      function showSection(sectionId) {
+        var showingAppointments = sectionId === "appointments";
+        scheduleSection.hidden = showingAppointments;
+        appointmentsSection.hidden = !showingAppointments;
+        layout.classList.add("single-view");
+        primaryNav.querySelectorAll("a").forEach(function (link) {
+          if (link.hash === "#" + sectionId) link.setAttribute("aria-current", "page");
+          else link.removeAttribute("aria-current");
+        });
+      }
+
+      function navigateToSection(sectionId) {
+        showSection(sectionId);
+        if (window.location.hash !== "#" + sectionId) window.location.hash = sectionId;
+      }
 
       function todayString() {
         var now = new Date();
@@ -393,7 +430,11 @@
       timeInput.value = "09:00";
       cancelEditButton.hidden = true;
       appointments = loadAppointments();
+      showSection(window.location.hash === "#appointments" ? "appointments" : "schedule");
       render();
+      window.addEventListener("hashchange", function () {
+        showSection(window.location.hash === "#appointments" ? "appointments" : "schedule");
+      });
 
       function startEditing(appointmentId) {
         var appointment = appointments.find(function (item) { return item.id === appointmentId; });
@@ -401,6 +442,7 @@
           showNotice("That appointment could not be found. Refresh the page and try again.", true);
           return;
         }
+        navigateToSection("schedule");
         editingId = appointment.id;
         document.getElementById("petName").value = appointment.petName;
         document.getElementById("ownerName").value = appointment.ownerName;
