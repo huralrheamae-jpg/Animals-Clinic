@@ -1,23 +1,23 @@
-# Pawcare Appointment Book · Project brief
+# Pawcare – Community Pet Appointment Tracker
 
 ## Pitch
 
-One simple page helps community veterinary clinic staff keep upcoming pet visits together without a server or account.
+Pawcare gives a small community veterinary clinic one simple page to organize pet appointments without a server or account.
 
 ## Problem
 
 **Working assumption to confirm:** In our local veterinary clinic, appointment details may be scattered across notes, making upcoming visits harder to check in one place. A single browser-based appointment list could make scheduling easier. This is a project assumption, not a claim that a community member has already been interviewed.
 
-## Users
+## Target users
 
-Primary user: veterinary clinic staff who schedule visits. The demo uses made-up pet and owner names only; it is not intended for real client or medical data.
+The primary users are clinic staff who schedule and track visits. Pet owners are represented only by fictional names; the class demo is not intended for real client or medical data.
 
-## Feature and requirement
+## Main feature · FR-01
 
-The app implements one feature: schedule and view a pet appointment.
+Clinic staff can add, view, edit, change the status of, and delete an appointment. Each appointment contains a pet name, owner name, date, time, reason, and Pending, Completed, or Cancelled status.
 
-**FR-01:** Clinic staff can schedule and view an appointment containing the pet name, owner name, appointment date, time, and reason for visit.
+**FR-01:** Clinic staff can manage a pet appointment with the pet name, owner name, appointment date, time, reason for visit, and status.
 
-## Architecture
+## Technologies and architecture
 
-One `index.html` file contains the HTML form, responsive CSS, and vanilla JavaScript. JavaScript validates fields, renders the appointment list, and stores appointment JSON in the browser's `localStorage`. Nothing is sent to a server. Data is limited to the browser profile and may be lost if its site data is cleared.
+One `index.html` file contains the HTML, responsive CSS, and plain JavaScript. JavaScript validates the form and renders and updates the appointment list. It reads and writes JSON in the browser's `localStorage` key `pawcare-appointments-v1`. Data remains in that browser profile; it is not sent to a server and may be lost if site data is cleared. The project uses no framework, backend, database, or external API.
