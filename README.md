@@ -1,66 +1,62 @@
-# Pawcare Clinic
+# Pawcare Appointment Book
 
-Pawcare Clinic is a lightweight, browser-based animal clinic management system. It brings pet and owner information, appointments, and medical history together in one responsive interface.
+A one-page appointment tracker for a community veterinary clinic. It stores appointments in the current browser with `localStorage`; it needs no account, server, database, or installation.
 
-## Purpose
+## Community problem
 
-The application helps a clinic keep track of registered pets and their owners, schedule and update appointments, and record diagnoses, treatments, and vaccinations. A dashboard gives a quick overview of clinic activity.
+**Working assumption to confirm with a clinic staff member:** In our local veterinary clinic, staff can struggle to keep track of upcoming pet visits when details are written in separate notes. A single appointment list could help staff record and check scheduled visits.
 
-## Features
+Do not present this as an interviewed or verified community need unless you have checked it with someone who has the problem. The demo uses made-up names only.
 
-- **Dashboard:** View total pets, owners, appointments, and completed checkups, plus recent pets and upcoming appointments.
-- **Pet registration:** Record a pet's name, type, breed, age, sex, and owner.
-- **Owner management:** Store owner names, phone numbers, email addresses, and addresses.
-- **Appointments:** Schedule appointments for registered pets, record the visit date, time, and reason, and update appointment status.
-- **Medical records:** Keep dated diagnosis, treatment, and vaccination information for each pet.
-- **Pet search:** Find registered pets by name.
-- **Record deletion:** Remove owners, pets, appointments, or medical records. Deleting a pet also deletes its linked appointments and medical records.
-- **Browser storage:** Save records in the browser's `localStorage` so they remain available after a refresh in the same browser.
-- **Responsive layout:** Use the interface on desktop and mobile screen sizes.
+## FR-01
 
-## Requirements
+**FR-01:** Clinic staff can schedule and view an appointment containing the pet name, owner name, appointment date, time, and reason for visit.
 
-- A modern web browser with JavaScript and browser storage enabled.
-- No package manager, dependencies, database server, or build tools are required.
+### Acceptance criteria
 
-## Installation and setup
+1. A valid appointment is added to the list and saved in this browser.
+2. Pet name, owner name, date, time, and reason are required; blank and whitespace-only names/reasons are rejected.
+3. An invalid calendar date or a date before today is rejected.
+4. After refreshing the page in the same browser, saved appointments remain visible.
 
-1. Download or clone this project.
-2. Keep `index.html` in the project directory.
-3. Open the file in a modern browser, or serve the project directory locally. For example, if Python is installed:
+## Scope and use
 
-   ```bash
-   python -m http.server 8000
-   ```
+This app implements one feature: scheduling and viewing pet appointments. Enter made-up demo data, select today or a future date, and choose **Add appointment**. The list is ordered by date and time. There are no owner accounts, medical records, payments, appointment editing, or synchronization between devices.
 
-4. Visit [http://localhost:8000](http://localhost:8000) in your browser.
+## Run it
 
-The local server command is optional; it does not install dependencies or build the application.
+Open `index.html` in a modern browser. No packages or build step are needed. If opening a local file does not allow browser storage in your browser, serve the folder locally, for example:
 
-## Using the application
-
-1. Open **Owners** and add an owner.
-2. Open **Pets** and register a pet, selecting its owner.
-3. Use **Appointments** to schedule visits and change an appointment's status. Mark completed visits as **Completed**; the dashboard counts these as completed checkups.
-4. Use **Medical records** to add dated diagnosis, treatment, or vaccination details for a pet.
-5. Search for a pet by name from the Pets page. Use the **Delete** action to remove records; deletion requires confirmation.
-
-Clinic records are stored in the browser profile that opens the application. They are not synchronized between browsers or devices. Clearing browser site data can remove saved records. This standalone application does not provide user accounts, centralized storage, or a backup service.
-
-## Technologies and tools
-
-- **HTML5** for application structure and forms.
-- **CSS3** for styling and responsive layouts.
-- **Vanilla JavaScript** for navigation, data entry, search, rendering, and record management.
-- **Browser `localStorage`** for client-side persistence.
-
-There is no frontend framework, backend, or external runtime dependency.
-
-## Project structure
-
-```text
-animals-clinic/
-├── .gitignore   # Git exclusions for generated, local, and sensitive files
-├── README.md    # Project overview and usage instructions
-└── index.html   # Complete application (HTML, CSS, and JavaScript)
+```powershell
+python -m http.server 8000
 ```
+
+Then open `http://localhost:8000`.
+
+## Architecture
+
+- `index.html` contains the page structure, responsive CSS, form validation, appointment rendering, and storage logic.
+- Vanilla JavaScript validates appointment fields and writes JSON to the browser's `localStorage`.
+- Data stays in that browser profile; it is not uploaded or backed up. Clearing site data can remove it.
+- The app has no external dependencies, server, login, or database.
+
+## Manual test table
+
+Use made-up values only. Clear the app's localStorage between independent runs if needed.
+
+| # | Test | Expected result | Result |
+|---|---|---|---|
+| 1 | Submit a valid appointment with all five fields | One appointment appears in the list and the count updates | Pass |
+| 2 | Leave a required field blank and submit | Browser validation prevents the save | Pass |
+| 3 | Enter only spaces for a required name or reason | The app rejects the value and shows an error | Pass |
+| 4 | Choose a date before today | The app rejects the appointment and explains the date rule | Pass |
+| 5 | Use an invalid calendar date, such as February 30 | The app rejects the date | Pass |
+| 6 | Refresh after saving a valid appointment | The appointment remains visible in the same browser | Pass |
+| 7 | Enter markup-like text as a name | It appears as text and does not create page markup | Pass |
+
+Test 5 exercised the date check after changing the input control to text in the browser test; normal date controls also prevent selecting nonexistent calendar dates.
+
+## Submission links
+
+- Public repository: https://github.com/huralrheamae-jpg/Animals-Clinic
+- YouTube demo: add your public 2–3 minute video link after recording it with made-up data.
